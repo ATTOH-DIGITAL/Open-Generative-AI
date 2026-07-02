@@ -1,12 +1,18 @@
 import { getModelById, getVideoModelById, getI2IModelById, getI2VModelById, getV2VModelById, getLipSyncModelById } from './models.js';
 
+const OWN_STACK = (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_PROVIDER === 'higgsfield');
+
 export class MuapiClient {
     constructor() {
-        // Ideally user provides this in settings
-        this.baseUrl = (typeof import.meta !== 'undefined' && import.meta.env?.DEV) ? '' : 'https://api.muapi.ai';
+        // Own-stack mode: same-origin routes served by the Higgsfield CLI adapter.
+        // Otherwise the user's Muapi key + cloud API (upstream behaviour).
+        this.baseUrl = OWN_STACK
+            ? ''
+            : (typeof import.meta !== 'undefined' && import.meta.env?.DEV) ? '' : 'https://api.muapi.ai';
     }
 
     getKey() {
+        if (OWN_STACK) return 'own-stack'; // server-side auth; header is ignored locally
         const key = window.__MUAPI_KEY__ || localStorage.getItem('muapi_key');
         if (!key) throw new Error('API Key missing. Please set it in Settings.');
         return key;

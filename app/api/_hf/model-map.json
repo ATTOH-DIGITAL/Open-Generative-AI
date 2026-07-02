@@ -1,0 +1,15 @@
+{
+  "__comment": "Muapi endpoint slug -> Higgsfield CLI job_set_type. Unmapped slugs fall back to snake_case pass-through. Curate against `higgsfield model list --json`.",
+  "nano-banana-2": "nano_banana_2",
+  "nano-banana": "nano_banana",
+  "flux-dev": "flux_dev",
+  "flux-2": "flux_2",
+  "seedream-v4-text-to-image": "seedream",
+  "seedream-v4-edit": "seedream_edit",
+  "kling-v3-text-to-video": "kling_3_0",
+  "kling-v3-image-to-video": "kling_3_0",
+  "seedance-v2-text-to-video": "seedance_2_0",
+  "seedance-v2-image-to-video": "seedance_2_0",
+  "veo3-1-text-to-video": "veo_3_1",
+  "veo3-1-image-to-video": "veo_3_1"
+}

@@ -14,7 +14,12 @@ export function middleware(request) {
                                 url.pathname.startsWith('/api/v1/get_upload_url') ||
                                 url.pathname.startsWith('/api/v1/upload-binary');
 
-        if (url.pathname.startsWith('/api/v1') && !isHandledByRoute) {
+        // Own-stack mode: generation + polling are served locally by
+        // app/api/v1/[[...endpoint]]/route.js (Higgsfield CLI adapter)
+        // instead of being rewritten to the Muapi cloud.
+        const ownStack = process.env.NEXT_PUBLIC_PROVIDER === 'higgsfield';
+
+        if (url.pathname.startsWith('/api/v1') && !isHandledByRoute && !ownStack) {
             const targetUrl = new URL(url.pathname + url.search, 'https://api.muapi.ai');
             return NextResponse.rewrite(targetUrl);
         }
